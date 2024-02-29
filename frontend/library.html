@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Library</title>
+    </head>
+    <body>
+        {% with select="library" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+
+        <div class="horizontal-wrapper">
+            <div class="pane left w-1-4">
+                <h3>
+                    <i class="fa fa-list-ul" aria-hidden="true"></i>
+                    Groups:
+                </h3>
+                <div class="group-item">
+                    <a href="/library/all">
+                        <i class="fa fa-globe" aria-hidden="true"></i> 
+                        <b> All videos</b>
+                    </a>
+                </div>
+                <div class="group-item">
+                    <a href="/library/-1">
+                        <i class="fa fa-circle-thin" aria-hidden="true"></i> 
+                        <b> No group</b>
+                    </a>
+                </div>
+                {% if show_groups==1 %}
+                    {% for gr in groups %}
+                        <div class="group-item">
+                            <div class="group-inner-item">
+                                <a href="/library/{{ gr[0] }}">
+                                    {{ gr[1] }}
+                                </a>
+                            </div>
+                            <div class="group-inner-item">
+                                <a href="/edit/group/{{ gr[0] }}"">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                     Edit
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="group-add-item">
+                    <a href="/create/group">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        New Group
+                    </a>
+                </div>
+            </div>
+            <div class="pane right w-3-4">
+                <div class="vertical-wrapper">
+                    <div class="pane pane-scroll top h-2-3 right-padding">
+                        {% if group=='all' %}
+                            <h2>All videos</h2>
+                            <hr>
+                        {% elif group!=-1 %}
+                            {% for gr in groups %}
+                                {% if gr[0]==group %}
+                                    <h2>{{ gr[1] }}</h2>
+                                    <h4>{{ gr[3] }}</h4>
+                                    <hr>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <h2>Ungrouped videos</h2>
+                            <hr>
+                        {% endif %}
+                        <!--
+                        <h3>
+                            <i class="fa fa-file-video-o" aria-hidden="true"></i>
+                            Videos:
+                        </h3>
+                        -->
+                        {% if show_videos==1 %}
+                            {% for video in videos %}
+                                <div class="video_item">
+                                    <h4>
+                                        <a href="/edit/video/{{ video[0] }}">{{ video[2] }}</a>
+                                    </h4>
+                                    <p>
+                                        <b><i class="fa fa-folder-open-o" aria-hidden="true"></i> Filename:</b> 
+                                        {{ video[1] }}
+                                    </p>
+                                    <p>
+                                        <b><i class="fa fa-clock-o" aria-hidden="true"></i> Duration:</b> 
+                                        {{ video[7] }}
+                                    </p>
+                                    <p>
+                                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i> 
+                                        {{ video[3] }}
+                                    </p>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <h4>No videos to show.</h4>
+                        {% endif %}
+                    </div>
+                    <div class="gutter-vert"></div>
+                    <div class="pane bottom h-1-3 right-padding">
+                        <h4>
+                            <i class="fa fa-upload" aria-hidden="true"></i>
+                            Upload videos:
+                        </h4>
+                        <form action = "/upload/video" method="POST" enctype="multipart/form-data"> 
+                            <label for="video-upload" class="file-drop-container" id="filedropcontainer">
+                                <span class="file-drop-title">Drop files here</span>
+                                or
+                                <input id="video-upload" type="file" name="videos" multiple accept="video/mp4" /> 
+                              </label>
+                            <button type="submit">
+                                <i class="fa fa-upload" aria-hidden="true"></i>
+                                Upload
+                            </button>
+                        </form> 
+                    </div>
+                </div>
+                <div class="gutter-horiz"></div>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='horizontal_resize.js') }}"></script>
+        <script src="{{ url_for('static', filename='vertical_resize.js') }}"></script>
+        <script src="{{ url_for('static', filename='file_drop.js') }}"></script>
+    </body>
+</html>

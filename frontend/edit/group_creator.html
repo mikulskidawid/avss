@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Create New Group</title>
+    </head>
+    <body>
+        {% with select="dashboard" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+        <div class="container">
+            <div class="box">
+                <h1>Create New Group</h1>
+                <form action="/forms/creategroup" method="post">
+                    <div class="box-item">
+                        <label for="groupname">Group Name:</label>
+                        <input type="text" name="groupname" id="groupname">
+                    </div>
+                    <div class="box-item">
+                        <label for="description">Description:</label>
+                        <input type="text" name="description" id="description"><br>
+                    </div>
+                    
+                    <div class="box-item">
+                        <label for="groupType">Group Type:</label>
+                        <select id="groupType" name="groupType">
+                            <option value=0>Regular</option>
+                            <option value=1>Serie</option>
+                            <option value=2>Ads</option>
+                        </select>
+                    </div>
+
+                    <div class="box-item">
+                        <label for="sort_order">Video Sorting: </label>
+                        <select id="sort_order" name="sort_order">
+                            <option value=0 selected>Ascending</option>
+                            <option value=1>Descending</option>
+                        </select>
+                    </div>
+
+                    <button type="submit">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Create New Group
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Edit video</title>
+    </head>
+    <body>
+        {% with select="dashboard" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+        <div class="horizontal-wrapper">
+            <div class="pane left w-1-4">
+                <h3>Edit group</h3><br>
+                <form action="/forms/savegroup" method="post">
+                    <input type="hidden" name="id" value="{{ group[0] }}">
+                    <label for="groupname">
+                        New group name:
+                    </label><br>
+                    <input type="text" id="groupname" name="groupname" value="{{ group[1] }}"><br>
+
+                    <label for="description">
+                        New description:
+                    </label><br>
+                    <input type="text" id="description" name="description" value="{{ group[3] }}">
+                    <br>
+                    <label for="groupType">Group Type: </label>
+                    <select id="groupType" name="groupType">
+                        <option value=0 {% if group[4]==0 %} selected {% endif %}>Regular</option>
+                        <option value=1 {% if group[4]==1 %} selected {% endif %}>Serie</option>
+                        <option value=2 {% if group[4]==2 %} selected {% endif %}>Ads</option>
+                    </select>
+                    <br>
+                    <label for="sort_order">Video Sorting: {{ group[5] }} </label>
+                    <select id="sort_order" name="sort_order">
+                        <option value=0 {% if group[5]==0 %} selected {% endif %}>Ascending</option>
+                        <option value=1 {% if group[5]==1 %} selected {% endif %}>Descending</option>
+                    </select>
+
+                    <br>
+                    <button type="submit">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        Save
+                    </button><br>
+                </form> 
+                <form action="/forms/deletegroup" method="post">
+                    <input type="hidden" name="group_id" value="{{ group[0] }}"><br>
+                    <button type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Delete Group
+                    </button>
+                </form>
+            </div>
+            <div class="pane right right-padding w-3-4">
+                <h3>Video list: </h3>
+                {% for video in videos %}
+                    <div class="video_list_item">
+                        <h4>
+                            <a href="/edit/video/{{ video[0] }}">
+                                {{ video[2] }}, 
+                                {% if group[4]==1 %} 
+                                    Season {{ video[5] }}, Ep. {{ video[6] }}
+                                {% endif %}
+                                <b> <i class="fa fa-clock-o" aria-hidden="true"></i> Duration: </b> 
+                                {{ video[7] }}
+                            </a>
+                        </h4>
+                    </div>
+                {% endfor %}
+                <div class="gutter-horiz"></div>
+            </div>
+        </div>
+    </body>
+</html>

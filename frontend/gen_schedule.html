@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Channel</title>
+    </head>
+    <body>
+        {% with select="scheduler" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+
+        <div class="container">
+            <h1>Generated Schedule</h1>
+            <div id="schedule-container">
+                {% for item in schedule %}
+                    <div class="schedule-item">
+                        <p><b>ID: {{item[0]}}</b>, Video ID: {{item[1]}} </p>
+                        <p><b>Time: {{item[2]}}</b>, Date: {{item[3]}} </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

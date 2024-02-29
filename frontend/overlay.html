@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Overlay</title>
+    </head>
+    <body>
+        {% with select="overlay" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+
+        <div class="container">
+            <h1>Overlay</h1>
+            <form action="/forms/save/overlay" method="post">
+                <label><b>Logo dimensions: </b></label>
+                <input type="number" name="logo_w" value={{ settings[13] }}>X
+                <input type="number" name="logo_h" value={{ settings[14] }}><br>
+                <label><b>Logo transparency(%): </b></label>
+                <input type="number" name="logo_transparency" value={{ settings[15] }}><br>
+                <label><b>Horizontal position: </b></label>
+                <select name="horizontal_position">
+                    <option value=1 {% if settings[16]=="1" %} selected {% endif %}>
+                        Left
+                    </option>
+                    <option value=2 {% if settings[16]=="2" %} selected {% endif %}>
+                        Center
+                    </option>
+                    <option value=3 {% if settings[16]=="3" %} selected {% endif %}>
+                        Right
+                    </option>
+                </select><br>
+
+                <label><b>Vertical position: </b></label>
+                <select name="vertical_position">
+                    <option value=1 {% if settings[18]=="1" %} selected {% endif %}>
+                        Top
+                    </option>
+                    <option value=2 {% if settings[18]=="2" %} selected {% endif %}>
+                        Center
+                    </option>
+                    <option value=3 {% if settings[18]=="3" %} selected {% endif %}>
+                        Bottom
+                    </option>
+                </select><br>
+
+                <label>Horizontal margin: </label>
+                <input type="number" name="horizontal_margin" value={{ settings[17] }}>
+                <br>
+                <label>Vertical margin: </label>
+                <input type="number" name="vertical_margin" value={{ settings[19] }}>
+                <br>
+                <button type="submit">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                     Save & Restart
+                </button>
+            </form>
+        </div>
+    </body>
+</html>

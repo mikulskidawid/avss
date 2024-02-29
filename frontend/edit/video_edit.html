@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Edit video</title>
+        <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
+        <script defer src="https://vjs.zencdn.net/8.9.0/video.min.js"></script>
+    </head>
+    <body>
+        {% with select="dashboard" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+        <div class="container">
+            <div class="box">
+                <h1>Edit video: {{ video[2] }}</h1><br>
+                <video class="video-js" id="edit_player" width="854" height="480" controls preload="auto">
+                    <source src="{{ url_for('static', filename='uploads/videos/'+video[1]+'.mp4') }}" type="video/mp4">
+                </video>
+                <form action="/forms/savevideo" method="post">
+                    <input type="hidden" name="id" value="{{ video[0] }}">
+                    <div class="box-item">
+                        <label for="videoname">
+                            Rename video:
+                        </label>
+                        <input type="text" id="videoname" name="videoname" value="{{ video[2] }}">
+                    </div>
+
+                    <div class="box-item">
+                        <label for="group_id">Group: </label>
+                        <select id="group_id" name="group_id">
+                            <option value=-1 {% if video[4]==-1 %} selected {% endif %}>No group</option>
+                            {% for group in groups %}
+                            <option value={{ group[0] }} {% if video[4]==group[0] %} selected {% endif %}>{{ group[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="box-item">
+                        <label for="videoname">
+                            Season*
+                        </label>
+                        <input type="number" id="season" name="season" value="{{ video[5] }}">
+                    </div>
+
+                    <div class="box-item">
+                        <label for="videoname">
+                            Episode*
+                        </label>
+                        <input type="number" id="episode" name="episode" value="{{ video[6] }}">
+                    </div>
+
+                    <p>*Leave default values, if video is not a part of any serie.</p>
+
+                    <button type="submit">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        Save Video
+                    </button>
+                </form> 
+                <form action="/forms/deletevideo" method="post">
+                    <input type="hidden" name="video_id" value="{{ video[0] }}">
+                    <input type="hidden" name="filename" value="{{ video[1] }}">
+                    <button type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Delete Video
+                    </button>
+                </form>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='edit_player.js') }}"></script>
+    </body>
+</html>

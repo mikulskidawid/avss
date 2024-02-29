@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Dashboard</title>
+    </head>
+    <body>
+        {% with select="dashboard" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+        <div class="container">
+            <h1>Dashboard</h1>
+            <div class="container container-flex">
+                <div class="dashboard-box">
+                    <h2>Server Info:</h2>
+                    <p>Operating System: <span id="system"></span></p>
+                    <p>Server Time: <span id="server-time"></span></p>
+                    <p>Boot Time: <span id="boot-time"></span></p>
+                    <p>CPU: <span id="cpu"></span></p>
+                    <p>CPU Usage:</p>
+                    <div class="usage-bar">
+                        <div class="used-space" id="cpu-percent">
+                        
+                        </div>
+                        <div class="free-space" id="cpu-free">
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-box">
+                    <h2>Memory Info:</h2>
+                    <p>Total: <span id="mem-total"></span></p>
+                    <div class="usage-bar">
+                        <div class="used-space" id="mem-used">
+                        
+                        </div>
+                        <div class="free-space" id="mem-available">
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-box">
+                    <h2>Disc Info:</h2>
+                    <p>Filesystem: <span id="disc-filesystem"></span></p>
+                    <p>Mount: <span id="disc-mount"></span></p>
+                    <p>Total: <span id="disc-total"></span></p>
+                    <div class="usage-bar">
+                        <div class="used-space" id="disc-used">
+                        
+                        </div>
+                        <div class="free-space" id="disc-free">
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-box">
+                    <h2>Media Library Info:</h2>
+                    <p>Groups: <b>{{ add_data[0] }}</b></p>
+                    <p>Videos: <b>{{ add_data[1] }}</b></p>
+                </div>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='dashboard_data.js') }}"></script>
+    </body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Settings</title>
+    </head>
+    <body>
+        {% with select="settings" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+
+        <div class="horizontal-wrapper">
+            <div class="pane left w-1-4">
+                <a class="setting-link" href="#channel">
+                    Channel
+                </a>
+                <a class="setting-link" href="#system">
+                    System
+                </a>
+                <a class="setting-link" href="#stream">
+                    Live Stream
+                </a>
+                <a class="setting-link" href="#about">
+                    About
+                </a>
+            </div>
+            <div class="pane pane-scroll right right-padding w-3-4">
+                <div class="gutter-horiz gutter-horiz-long"></div>
+                <div id="channel">
+                    <h2>Channel:</h2>
+                    <form action="/forms/save/channel" method="post">
+                        <label for="channel_name">Channel name: </label>
+                        <input type="text" name="channel_name" id="channel_name" value="{{ settings[6] }}"><br>
+
+                        <label for="channel_desc">Channel description: </label>
+                        <input type="text" name="channel_desc" id="channel_desc" value="{{ settings[7] }}"><br>
+
+                        <label for="channel_mode">Channel mode: </label>
+                        <input type="text" name="channel_mode" id="channel_mode" value="{{ settings[8] }}"><br>
+
+                        <button type="submit">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                             Save
+                        </button>
+                    </form>
+                    <hr>
+                </div>
+                <div id="system">
+                    <h2>System:</h2>
+                    <form action="/forms/save/system" method="post">
+                        <label for="admin_user">Admin username: </label>
+                        <input type="text" name="admin_user" id="admin_user" value="{{ settings[11] }}"><br>
+
+                        <label for="admin_passwd">Admin password: </label>
+                        <input type="text" name="admin_passwd" id="admin_passwd" value="{{ settings[12] }}"><br>
+
+                        <label for="stream_port">Stream port: </label>
+                        <input type="text" name="stream_port" id="stream_port" value="{{ settings[9] }}"><br>
+
+                        <label for="frontend_port">Frontend port: </label>
+                        <input type="text" name="frontend_port" id="frontend_port" value="{{ settings[10] }}"><br>
+
+                        <button type="submit">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                             Save
+                        </button>
+                    </form>
+                    <hr>
+                </div>
+                <div id="stream">
+                    <h2>Live Stream:</h2>
+                    <form action="/forms/save/stream" method="post">
+                        <label for="stream_w">Stream resolution: </label>
+                        <input type="number" name="stream_w" id="stream_w" value="{{ settings[0] }}">
+                        X
+                        <input type="number" name="stream_h" id="stream_h" value="{{ settings[1] }}"><br>
+
+                        <label for="framerate">Stream framerate: </label>
+                        <input type="number" name="framerate" id="framerate" value="{{ settings[2] }}"><br>
+
+                        <label for="preset">FFMPEG Preset: </label>
+                        <select name="preset" id="preset">
+                            <option value='ultrafast' {% if settings[3]=='ultrafast' %} selected {% endif %}>
+                                ultrafast
+                            </option>
+                            <option value='superfast' {% if settings[3]=='superfast' %} selected {% endif %}>
+                                superfast
+                            </option>
+                            <option value='veryfast' {% if settings[3]=='veryfast' %} selected {% endif %}>
+                                veryfast
+                            </option>
+                            <option value='faster' {% if settings[3]=='faster' %} selected {% endif %}>
+                                faster
+                            </option>
+                            <option value='fast' {% if settings[3]=='fast' %} selected {% endif %}>
+                                fast
+                            </option>
+                            <option value='medium' {% if settings[3]=='medium' %} selected {% endif %}>
+                                medium
+                            </option>
+                            <option value='slow' {% if settings[3]=='slow' %} selected {% endif %}>
+                                slow
+                            </option>
+                            <option value='slower' {% if settings[3]=='slower' %} selected {% endif %}>
+                                slower
+                            </option>
+                            <option value='veryslow' {% if settings[3]=='veryslow' %} selected {% endif %}>
+                                veryslow
+                            </option>
+                            <option value='placebo' {% if settings[3]=='placebo' %} selected {% endif %}>
+                                placebo
+                            </option>
+                        </select><br>
+
+                        <label for="enable_restream">Stream Outputs: </label>
+                        <select name="enable_restream" id="enable_restream">
+                            <option value=0 {% if settings[4]==0 %} selected {% endif %}>
+                                Preview only (HLS)
+                            </option>
+                            <option value=1 {% if settings[4]==1 %} selected {% endif %}>
+                                Preview (HLS) + Custom
+                            </option>
+                        </select><br>
+
+                        <label for="stream_out">Custom stream output: </label>
+                        <input type="text" name="stream_out" id="stream_out" value="{{ settings[5] }}"><br>
+
+                        <button type="submit">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                             Save & Restart
+                        </button>
+                    </form>
+                    <hr>
+                </div>
+                <div id="about">
+                    <h2>About:</h2>
+                    <h4>Advanced Video Scheduling System</h4>
+                    <p>Version: <b>1.0</b></p>
+                    <p>Author: <b>Dawid Mikulski</b></p>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='horizontal_resize.js') }}"></script>
+    </body>
+</html>

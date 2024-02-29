@@ -1,0 +1,26 @@
+<header>
+    <a {% if select == 'dashboard' %}class="highlight"{% endif %} href="/">
+        <i class="fa fa-tachometer" aria-hidden="true"></i>
+        Dashboard
+    </a>
+    <a {% if select == 'studio' %}class="highlight"{% endif %} href="/studio">
+        <i class="fa fa-video-camera" aria-hidden="true"></i>
+        Studio
+    </a>
+    <a {% if select == 'scheduler' %}class="highlight"{% endif %} href="/scheduler">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        Scheduler
+    </a>
+    <a {% if select == 'library' %}class="highlight"{% endif %} href="/library">
+        <i class="fa fa-list-alt" aria-hidden="true"></i>
+        Library
+    </a>
+    <a {% if select == 'overlay' %}class="highlight"{% endif %} href="/overlay">
+        <i class="fa fa-television" aria-hidden="true"></i>
+        Overlay
+    </a>
+    <a {% if select == 'settings' %}class="highlight"{% endif %} href="/settings">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+        Settings
+    </a>
+</header>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include 'widgets/head.html'%}
+        <title>AVSS - Studio</title>
+        <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
+        <script defer src="https://vjs.zencdn.net/8.9.0/video.min.js"></script>
+    </head>
+    <body>
+        {% with select="studio" %}
+            {% include 'widgets/header.html'%}
+        {% endwith %}
+
+        <div class="horizontal-wrapper">
+            <div class="pane left w-1-2">
+                {% for group in groups %}
+                    {% set groupLength = namespace(value=0) %}
+                    {% for v in videos %}
+                        {% if v[4]|int == group[0]|int %}
+                            {% set groupLength.value = groupLength.value + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if groupLength.value == 0 %}
+                        <i class="fa fa-folder-open" aria-hidden="true"></i>
+                        <b> {{ group[1] }}</b>
+                    {% else %}
+                        <i class="fa fa-folder" aria-hidden="true"></i>
+                        <b> {{ group[1] }}</b>
+                        <ul>
+                            {% for v in videos %}
+                                {% if v[4]|int == group[0]|int %}
+                                    <li>
+                                        <i class="fa fa-file-video-o" aria-hidden="true"></i>
+                                         {{v[2]}} ({{v[7]}})
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="pane right w-1-2">
+                <div class="vertical-wrapper">
+                    <div class="pane top h-2-3">
+                        <div class="studio-player">
+                            <div class="studio-video-box">
+                                <video class="video-js vjs-fill" id="studio_player" controls preload="auto" playsInline>
+                                    <source src="{{ url_for('static', filename='stream/live.m3u8')}}" type="application/x-mpegURL">
+                                    <!--<source src="{{ url_for('static', filename='stream/live.m3u8')}}" type="application/x-mpegURL">-->
+                                </video>
+                            </div>
+                            <div class="studio-control-box">
+                                <p>
+                                    <span id="studio_clock">00:00:00</span>
+                                     Now playing: <span id="now_playing"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gutter-vert"></div>
+                    <div class="pane bottom h-1-3 pane-scroll" id="main-container">
+                        <h3>Daily schedule: </h3>
+                        <div id="schedule-container">
+                            <!-- Schedule here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="gutter-horiz"></div>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='horizontal_resize.js') }}"></script>
+        <script src="{{ url_for('static', filename='vertical_resize.js') }}"></script>
+        <script src="{{ url_for('static', filename='studio_player.js') }}"></script>
+        <script src="{{ url_for('static', filename='studio_schedule.js') }}"></script>
+        <script src="{{ url_for('static', filename='studio_clock.js') }}"></script>
+    </body>
+</html>
